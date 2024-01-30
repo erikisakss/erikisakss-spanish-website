@@ -74,7 +74,7 @@ const TranslationQuiz: React.FC = () => {
               Switch to {targetLanguage}
             </button>
             <div className="my-4">
-              <p className="text-center font-bold text-lg text-black dark:text-white">{currentWordPair[selectedLanguage]}</p>
+              <p className="text-center font-bold text-lg text-black ">{currentWordPair[selectedLanguage]}</p>
             </div>
             <div>
               {choices.map((choice, index) => (
