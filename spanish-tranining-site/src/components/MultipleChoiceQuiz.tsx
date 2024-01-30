@@ -80,7 +80,7 @@ const TranslationQuiz: React.FC = () => {
               {choices.map((choice, index) => (
                 <button
                   key={index}
-                  className={`block w-full text-left px-4 py-2 my-1 rounded ${
+                  className={`block w-full text-left px-4 py-2 my-1 rounded dark:bg-gray${
                     wrongAnswers.includes(choice)
                         ? 'bg-custom-red'
                         : selectedAnswer === choice
