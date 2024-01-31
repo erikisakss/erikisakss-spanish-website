@@ -82,10 +82,10 @@ const TranslationQuiz: React.FC = () => {
                   key={index}
                   className={`block w-full text-left px-4 py-2 my-1 rounded dark:bg-gray${
                     wrongAnswers.includes(choice)
-                        ? 'bg-custom-red dark:bg-custom-red' // applies on both light and dark mode
+                        ? 'dark:bg-custom-red bg-custom-red ' // applies on both light and dark mode
                         : selectedAnswer === choice
-                        ? 'bg-custom-green dark:bg-custom-green' // applies on both light and dark mode
-                        : ''
+                        ? 'dark:bg-custom-green bg-custom-green ' // applies on both light and dark mode
+                        : 'bg-gray-100 dark:bg-gray-800'
                   } border-2 border-gray-200 hover:border-gray-100 text-black dark:text-white`}
                   onClick={() => handleAnswer(choice)}
                 
