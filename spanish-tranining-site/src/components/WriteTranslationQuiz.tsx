@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import data from './data.json';
+import '../index.css';
 
 interface WordPair {
     Spanish: string;
@@ -18,11 +19,12 @@ const getRandomWordPair = () => {
 
 const WriteTranslationQuiz: React.FC = () => {
     const [currentWordPair, setCurrentWordPair] = useState<WordPair>(getRandomWordPair());
-    const [selectedLanguage, setSelectedLanguage] = useState<'Spanish' | 'English'>('Spanish');
+    const [selectedLanguage, setSelectedLanguage] = useState<'Spanish' | 'English'>('English');
     const [userInput, setUserInput] = useState<string>('');
     const [answerStatus, setAnswerStatus] = useState<'correct' | 'almost' | 'incorrect' | null>(null);
     const targetLanguage = selectedLanguage === 'Spanish' ? 'English' : 'Spanish';
     const [definition, setDefinition] = useState<string>('');
+    const [isFetching, setIsFetching] = useState<boolean>(false);
     useEffect(() => {
        setCurrentWordPair(getRandomWordPair());
         setUserInput('');
@@ -95,14 +97,28 @@ const WriteTranslationQuiz: React.FC = () => {
     };
 
     const fetchDefinition = async () => {
-        const wordToDefine = currentWordPair.English.toLowerCase();
-        try {
-            const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordToDefine}`);
+       const wordToDefine = currentWordPair[selectedLanguage].toLowerCase();
+       setIsFetching(true); 
+       try {
+          
+            //Add the word to define as a body word: wordToDefine
+            const response = await fetch(`https://translator-gpt-worker.erik-ef2.workers.dev/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({word: wordToDefine})
+                    });
+
+                    
+
             const data = await response.json();
-            const definition = data[0].meanings[0].definitions[0].definition;
-            setDefinition(definition);
+            
+            setDefinition(data.response);
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsFetching(false);
         }
     }
 
@@ -145,7 +161,12 @@ const WriteTranslationQuiz: React.FC = () => {
                 >
                     Get definition
                 </button>
-                {definition && (
+                {isFetching ? (
+                    <div className="w-full px-4 py-2 my-1 rounded text-black bg-gray-100 overflow-auto">
+                      <p className="loading-text">Fetching definition from OpenAI<span className='loading-dots'>...</span></p>
+                      </div>
+                      ) : 
+                definition && (
                     <div className="w-full px-4 py-2 my-1 rounded text-black bg-gray-100 overflow-auto">
                     <p className="break-words">{definition}</p>
                     </div>
