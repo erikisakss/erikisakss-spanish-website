@@ -19,7 +19,7 @@ const getRandomWordPair = () => {
 
 const WriteTranslationQuiz: React.FC = () => {
     const [currentWordPair, setCurrentWordPair] = useState<WordPair>(getRandomWordPair());
-    const [selectedLanguage, setSelectedLanguage] = useState<'Spanish' | 'English'>('English');
+    const [selectedLanguage, setSelectedLanguage] = useState<'Spanish' | 'English'>('Spanish');
     const [userInput, setUserInput] = useState<string>('');
     const [answerStatus, setAnswerStatus] = useState<'correct' | 'almost' | 'incorrect' | null>(null);
     const targetLanguage = selectedLanguage === 'Spanish' ? 'English' : 'Spanish';

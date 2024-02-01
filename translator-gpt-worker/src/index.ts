@@ -7,7 +7,7 @@ export interface Env {
 }
 
 const corsHeaders = {
-	"Access-Control-Allow-Origin": "malaga.erikisaksson.se",
+	"Access-Control-Allow-Origin": "https://malaga.erikisaksson.se",
 	"Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
 	"Access-Control-Allow-Headers": "Content-Type",
 };
